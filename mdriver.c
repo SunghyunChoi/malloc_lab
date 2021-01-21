@@ -154,7 +154,6 @@ int main(int argc, char **argv)
     /* temporaries used to compute the performance index */
     double secs, ops, util, avg_mm_util, avg_mm_throughput, p1, p2, perfindex;
     int numcorrect;
-    
     /* 
      * Read and interpret the command line arguments 
      */
@@ -229,12 +228,12 @@ int main(int argc, char **argv)
      * If no -f command line arg, then use the entire set of tracefiles 
      * defined in default_traces[]
      */
-    if (tracefiles == NULL) {
+    
+	if (tracefiles == NULL) {
         tracefiles = default_tracefiles;
         num_tracefiles = sizeof(default_tracefiles) / sizeof(char *) - 1;
 	printf("Using default tracefiles in %s\n", tracedir);
     }
-
     /* Initialize the timing package */
     init_fsecs();
 
@@ -585,7 +584,7 @@ static int eval_mm_valid(trace_t *trace, int tracenum, range_t **ranges)
     char *p;
     
     /* Reset the heap and free any records in the range list */
-    mem_reset_brk();
+	mem_reset_brk();
     clear_ranges(ranges);
 
     /* Call the mm package's init function */

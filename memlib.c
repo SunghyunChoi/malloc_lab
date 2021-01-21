@@ -29,9 +29,9 @@ void mem_init(void)
 	fprintf(stderr, "mem_init_vm: malloc error\n");
 	exit(1);
     }
-
     mem_max_addr = mem_start_brk + MAX_HEAP;  /* max legal heap address */
     mem_brk = mem_start_brk;                  /* heap is empty initially */
+    //printf("initial value of mem_brk : %p\n", mem_brk);
 }
 
 /* 
@@ -65,6 +65,7 @@ void *mem_sbrk(int incr)
 	return (void *)-1;
     }
     mem_brk += incr;
+    //printf("After init, mem_brk : %p\n", mem_brk);
     return (void *)old_brk;
 }
 
