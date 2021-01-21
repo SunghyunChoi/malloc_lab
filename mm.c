@@ -258,44 +258,6 @@ static void removeFreeBlock(void* bp)
 
 static void* find_fit(size_t size)
 {
-
-
-#ifdef NEXT_FIT 
-    /* Next fit search */
-    char* bp = next_ptr;
-
-    /* Search from the next_ptr to the end of list */
-    for (; GET_SIZE(HDRP(next_ptr)) > 0; next_ptr = NEXT_BLKP(next_ptr))
-        if (!GET_ALLOC(HDRP(next_ptr)) && (asize <= GET_SIZE(HDRP(next_ptr))))
-            return next_ptr;
-
-    /* search from start of list to old ptr(= heap_listp) */
-    for (next_ptr = heap_listp; next_ptr < bp; next_ptr = NEXT_BLKP(next_ptr))
-        if (!GET_ALLOC(HDRP(next_ptr)) && (asize <= GET_SIZE(HDRP(next_ptr))))
-            return next_ptr;
-
-    return NULL;  /* no fit found */
-
-
-   ///* Next-fit search (성현이형 코드)*/
-   // void* bp;
-   // for (bp = next_ptr; GET_SIZE(HDRP(bp)) > 0; bp = NEXT_BLKP(bp)) {
-   //     if (!GET_ALLOC(HDRP(bp)) && (asize <= GET_SIZE(HDRP(bp)))) {
-   //         //lowers the performance
-   //         //next_start = bp;
-   //         return bp;
-   //     }
-   // }
-   // for (bp = heap_listp; bp != next_ptr; bp = NEXT_BLKP(bp)) {
-   //     if (!GET_ALLOC(HDRP(bp)) && (asize <= GET_SIZE(HDRP(bp)))) {
-   //         //lowers the performance
-   //         //next_start = bp;
-   //         return bp;
-   //     }
-   // }
-   // return NULL; /* No fit */
-#else 
-    /* $begin mmfirstfit */
         /* First fit search */
     void* bp;
 
@@ -305,8 +267,6 @@ static void* find_fit(size_t size)
         }
     }
     return NULL; /* No fit */
-/* $end mmfirstfit */
-#endif
 }
 
 
